@@ -6,8 +6,13 @@ metadata    :name        => "actionservice",
             :url         => "https://github.com/youdevise/mcollective-actionservice-agent",
             :timeout     => 60
 
-config = YAML.load_file('/etc/mcollective/action_services.yaml')
-config['services'].each do |service|
+config_file = '/etc/action_services.yaml'
+services = []
+if File.exist?(config_file)
+  config = YAML.load_file('/etc/action_services.yaml')
+  services = config['services']
+end
+services.each do |service|
   ['start','stop','restart','status'].each do |action|
     action "#{action}-#{service}", :description => "#{action} #{service}" do
       display :always

@@ -7,8 +7,14 @@ module MCollective
     # Allows acl's to be explicitly set per action/service.
     # mco rpc actionservice status-elasticsearch-default
     class Actionservice<RPC::Agent
-      config = YAML.load_file('/etc/action_services.yaml')
-      config['services'].each do |service|
+      config_file = '/etc/action_services.yaml'
+      services = []
+      if File.exist?(config_file)
+        config = YAML.load_file('/etc/action_services.yaml')
+        services = config['services']
+      end
+
+      services.each do |service|
         ['start','stop','status','restart'].each do |action|
           action "#{action}-#{service}" do
             result =  Service.do_service_action(action, service)
