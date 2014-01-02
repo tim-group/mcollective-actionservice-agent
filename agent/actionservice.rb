@@ -10,7 +10,6 @@ module MCollective
       config = YAML.load_file('/etc/action_services.yaml')
       config['services'].each do |service|
         ['start','stop','status','restart'].each do |action|
-          action_with_service = "#{action}-#{service}"
           action "#{action}-#{service}" do
             result =  Service.do_service_action(action, service)
             if ['start','stop'].include? action 
