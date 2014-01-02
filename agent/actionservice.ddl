@@ -3,6 +3,7 @@ metadata    :name        => "actionservice",
             :author      => "Richard Pearce (heavily borrowed from service.rb by R.I.Pienaar)",
             :license     => "ASL2",
             :version     => "1",
+            :url         => "https://github.com/youdevise/mcollective-actionservice-agent",
             :timeout     => 60
 
 config = YAML.load_file('/etc/mcollective/action_services.yaml')
